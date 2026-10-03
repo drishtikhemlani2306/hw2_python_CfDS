@@ -25,14 +25,18 @@
 # representing the usernames of every user that
 # has worked as job_title.
 
+cvs = [
+    {'user': 'john', 'jobs': ['analyst', 'engineer']},
+    {'user': 'jane', 'jobs': ['finance', 'engineer']}
+]
+
 def has_experience_as(cvs, job_title):
     for cv in cvs:
-        print(cv['user'])
+        if job_title in cv['jobs']:
+            print(cv['user'])
     return cvs, job_title
 
-print(has_experience_as([{'user': 'john', 'jobs': ['analyst', 'engineer']},
-     {'user': 'jane', 'jobs': ['finance', 'software']}], 'title'))
-
+has_experience_as(cvs, 'analyst')
 
 #
 # 5)
@@ -43,7 +47,18 @@ print(has_experience_as([{'user': 'john', 'jobs': ['analyst', 'engineer']},
 # are the number of users that have done
 # that job.
 
+def job_counts(cvs):
+    new_dict = {}
 
+    for cv in cvs:
+        for jobs in cv['jobs']:
+            if jobs in new_dict:
+                new_dict[jobs] += 1
+            else:
+                new_dict[jobs] = 1
+    return new_dict
+
+print(job_counts(cvs))
 
 #
 # 6)
@@ -60,3 +75,9 @@ print(has_experience_as([{'user': 'john', 'jobs': ['analyst', 'engineer']},
 # dictionaries to iterate over them like a
 # list of tuples.
 
+
+def most_popular_job(cvs):
+    for jobs, count in job_counts(cvs).items():
+        print(count.max())
+
+print(most_popular_job(cvs))
