@@ -77,7 +77,8 @@ print(job_counts(cvs))
 
 
 def most_popular_job(cvs):
-    for jobs, count in job_counts(cvs).items():
-        print(count.max())
+    max_count = 0
+    total = 0
 
+    print(job_counts(cvs).items())
 print(most_popular_job(cvs))
