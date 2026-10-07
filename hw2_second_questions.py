@@ -1,4 +1,3 @@
-
 ############################################
 #
 # Now, imagine you are given data from a website that
@@ -25,20 +24,17 @@
 # representing the usernames of every user that
 # has worked as job_title.
 
-cvs = [
-    {'user': 'john', 'jobs': ['analyst', 'engineer']},
-    {'user': 'jane', 'jobs': ['finance', 'engineer']}
-]
+CV=[{'user': 'john', 'jobs': ['analyst', 'engineer', 'software', 'engineer']},
+    {'user': 'jane', 'jobs': ['finance', 'software', 'engineer']}]
 
-def has_experience_as(cvs, job_title):
-    for cv in cvs:
+def has_experience_as(CV, job_title):
+    for cv in CV:
         if job_title in cv['jobs']:
             print(cv['user'])
-    return cvs, job_title
+    return CV, job_title
 
-has_experience_as(cvs, 'analyst')
+has_experience_as(CV, "finance")
 
-#
 # 5)
 # Create a function called "job_counts"
 # that has one parameter: list of CV's
@@ -47,18 +43,17 @@ has_experience_as(cvs, 'analyst')
 # are the number of users that have done
 # that job.
 
-def job_counts(cvs):
-    new_dict = {}
-
-    for cv in cvs:
-        for jobs in cv['jobs']:
-            if jobs in new_dict:
-                new_dict[jobs] += 1
+def job_count(CV):
+    counts={}
+    for cv in CV:
+        for job in cv['jobs']:
+            if job in counts:
+                 counts[job]+=1
             else:
-                new_dict[jobs] = 1
-    return new_dict
+                counts[job]=1
+    return counts
 
-print(job_counts(cvs))
+print(job_count(CV))
 
 #
 # 6)
@@ -75,10 +70,16 @@ print(job_counts(cvs))
 # dictionaries to iterate over them like a
 # list of tuples.
 
+def most_popular_job(CV):
+    counts=job_count(CV)
 
-def most_popular_job(cvs):
-    max_count = 0
-    total = 0
+    most_popular=""
+    highest_count=0
 
-    print(job_counts(cvs).items())
-print(most_popular_job(cvs))
+    for job, count in counts.items():
+        if count > highest_count:
+            most_popular=job
+            highest_count=count
+    return (most_popular, highest_count)
+
+print("The most popular job in the list are: ", most_popular_job(CV))
