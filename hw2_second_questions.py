@@ -1,4 +1,3 @@
-
 ############################################
 #
 # Now, imagine you are given data from a website that
@@ -25,25 +24,17 @@
 # representing the usernames of every user that
 # has worked as job_title.
 
-cvs = [
-    {'user': 'john', 'jobs': ['analyst', 'engineer']},
-    {'user': 'jane', 'jobs': ['finance', 'engineer']}
-]
+CV=[{'user': 'john', 'jobs': ['analyst', 'engineer', 'software', 'engineer']},
+    {'user': 'jane', 'jobs': ['finance', 'software', 'engineer']}]
 
-def has_experience_as (cvs, job_test):
-    """QUESTION 4 return a list of strings representing the usernames of every user 
-    that has worked as job_title"""
-    experienced_group = []
-    for cv in cvs:
-        for jobs in cv["jobs"]:
-            if jobs == job_test:
-                experienced_group.append(cv["user"])
-                break
-    return experienced_group
+def has_experience_as(CV, job_title):
+    for cv in CV:
+        if job_title in cv['jobs']:
+            print(cv['user'])
+    return CV, job_title
 
-has_experience_as(cvs, 'analyst')
+has_experience_as(CV, "finance")
 
-#
 # 5)
 # Create a function called "job_counts"
 # that has one parameter: list of CV's
@@ -52,23 +43,17 @@ has_experience_as(cvs, 'analyst')
 # are the number of users that have done
 # that job.
 
-def job_counts(cvs):
-    counts_dict = {}
-    for cv in cvs:
-        seen = []
-        for jobs in cv['jobs']:
-            if jobs in seen:
-                continue
+def job_count(CV):
+    counts={}
+    for cv in CV:
+        for job in cv['jobs']:
+            if job in counts:
+                 counts[job]+=1
             else:
-                seen.append(jobs)
-        for each_job in seen:
-            if each_job in counts_dict:
-                counts_dict[each_job] += 1
-            else:    
-                counts_dict[each_job] = 1
-    return counts_dict
+                counts[job]=1
+    return counts
 
-print(job_counts(cvs))
+print(job_count(CV))
 
 #
 # 6)
@@ -85,12 +70,16 @@ print(job_counts(cvs))
 # dictionaries to iterate over them like a
 # list of tuples.
 
-def most_popular_job(cvs):
-    counts = job_counts(cvs)
-    best = (None, 0)
-    for each_job in counts.items():
-        if each_job[1] >= best[1]:
-            best = each_job
-    return best
+def most_popular_job(CV):
+    counts=job_count(CV)
 
-print(most_popular_job(cvs))
+    most_popular=""
+    highest_count=0
+
+    for job, count in counts.items():
+        if count > highest_count:
+            most_popular=job
+            highest_count=count
+    return (most_popular, highest_count)
+
+print("The most popular job in the list are: ", most_popular_job(CV))
