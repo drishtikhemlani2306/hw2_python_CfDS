@@ -1,4 +1,3 @@
-##############
 # Use the data in covid.csv for this exercise
 #
 # 10) In a separate file, write a piece of code that
@@ -7,26 +6,22 @@
 # for those countries that have more than 500, 1000 and 5000
 # active cases respectively.
 # Follow DRY principles in order to complete this exercise.
-#
-#
-# #
 
 import pandas as pd
 
-df = pd.read_csv("covid.csv")
+df= pd.read_csv("covid.csv")
 
 print(df.head())
 
-threshold = [500, 1000, 5000]
+df=df[df['Confirmed']>0].copy()
 
-for number in threshold:
+df['ratio']=df['Deaths']/df['Confirmed']
 
-    print(f'The countries which have more than {number} active cases.')
 
-    filtered_df = df[df['Active'] > number].copy()
+theshold=[500, 1000, 5000]
 
-    print(filtered_df['Country'])
-
-    filtered_df['Ratio'] = filtered_df['Deaths'] / filtered_df['Confirmed']
-
-    print(f"Average Deaths/Confirmed cases: {filtered_df['Ratio'].mean()}")
+for i in theshold:
+    subset = df[df['Active']>i]
+    print(f"\n Country with more {i} than:")
+    print(subset['Country'].tolist())
+    print(f"average of the ratio death/confirmed among those:  {subset['ratio'].mean(): 4f}" )
