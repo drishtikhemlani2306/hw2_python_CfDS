@@ -60,7 +60,7 @@ print(total_registered_cases_per_country(data))
 
 def country_with_most_cases(data):
     count = 0
-    most_cases_country = ''
+    most_cases_country = None
     for country, total in total_registered_cases_per_country(data).items():
 
         if total > count:
