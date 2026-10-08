@@ -30,11 +30,16 @@ cvs = [
     {'user': 'jane', 'jobs': ['finance', 'engineer']}
 ]
 
-def has_experience_as(cvs, job_title):
+def has_experience_as (cvs, job_test):
+    """QUESTION 4 return a list of strings representing the usernames of every user 
+    that has worked as job_title"""
+    experienced_group = []
     for cv in cvs:
-        if job_title in cv['jobs']:
-            print(cv['user'])
-    return cvs, job_title
+        for jobs in cv["jobs"]:
+            if jobs == job_test:
+                experienced_group.append(cv["user"])
+                break
+    return experienced_group
 
 has_experience_as(cvs, 'analyst')
 
@@ -48,15 +53,20 @@ has_experience_as(cvs, 'analyst')
 # that job.
 
 def job_counts(cvs):
-    new_dict = {}
-
+    counts_dict = {}
     for cv in cvs:
+        seen = []
         for jobs in cv['jobs']:
-            if jobs in new_dict:
-                new_dict[jobs] += 1
+            if jobs in seen:
+                continue
             else:
-                new_dict[jobs] = 1
-    return new_dict
+                seen.append(jobs)
+        for each_job in seen:
+            if each_job in counts_dict:
+                counts_dict[each_job] += 1
+            else:    
+                counts_dict[each_job] = 1
+    return counts_dict
 
 print(job_counts(cvs))
 
@@ -75,10 +85,12 @@ print(job_counts(cvs))
 # dictionaries to iterate over them like a
 # list of tuples.
 
-
 def most_popular_job(cvs):
-    max_count = 0
-    total = 0
+    counts = job_counts(cvs)
+    best = (None, 0)
+    for each_job in counts.items():
+        if each_job[1] >= best[1]:
+            best = each_job
+    return best
 
-    print(job_counts(cvs).items())
 print(most_popular_job(cvs))
